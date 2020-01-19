@@ -53,9 +53,9 @@ bool ESPWiFiManager::loadConfig() {
   String PasswordValue = jsonDocument[CONFIG_PASSWORD];
   bool firstTryValue = jsonDocument[CONFIG_FIRSTTRY];
 
-  SSID = SSIDValue;
-  Password = PasswordValue;
-  FirstTry = firstTryValue;
+  this->SSID = SSIDValue;
+  this->Password = PasswordValue;
+  this->FirstTry = firstTryValue;
 
   return true;
 }
@@ -87,7 +87,7 @@ void ESPWiFiManager::beginConnectedMode() {
   }
 
   if(FirstTry) {
-    saveConfig(SSID, Password, false);
+    saveConfig(this->SSID, this->Password, false);
   }
 }
 
@@ -96,7 +96,7 @@ bool ESPWiFiManager::try_connect() {
   WiFi.disconnect();
   WiFi.mode(WIFI_STA);
   WiFi.hostname(hostName);
-  WiFi.begin(SSID.c_str(), Password.c_str());
+  WiFi.begin(this->SSID.c_str(), this->Password.c_str());
 
   unsigned long timeout_start = millis();
   int result;
