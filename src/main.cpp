@@ -1,21 +1,23 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 
+#include "EspSaveCrash.h"
 #include "ESPWiFiManager.h"
 #include "ESPOTA.h"
 #include "ESPP1Serial.h"
 
-#define TCP_LISTEN_PORT 9999
+#define P1_TCP_LISTEN_PORT 9999
 #define MAX_CLIENTS 5
 #define LED_BUILTIN_12 2
 
 String hostName = "P1-reader";
 
+EspSaveCrash SaveCrash;
 ESPWiFiManager wifiManager;
 ESPOTA espOta;
 ESPP1Serial espP1Serial;
 
-WiFiServer server(TCP_LISTEN_PORT);
+WiFiServer server(P1_TCP_LISTEN_PORT);
 WiFiClient *clients[MAX_CLIENTS] = {NULL};
 bool enabled = LOW;
 int i;
@@ -48,6 +50,9 @@ void loop() {
       client.write("Max connections reached, closing.");
       client.stop();
     }
+    SaveCrash.print(client);
+    delay(1);
+    SaveCrash.clear();
   }
 
   number_connected = 0;
