@@ -1,4 +1,4 @@
-#include <FS.h>
+#include <LittleFS.h>
 #include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
 
@@ -25,11 +25,11 @@ void ESPWiFiManager::begin(String hostName) {
 }
 
 bool ESPWiFiManager::loadConfig() {
-  SPIFFS.begin();
-  File configFile = SPIFFS.open(CONFIG_FILENAME, "r");
+  LittleFS.begin();
+  File configFile = LittleFS.open(CONFIG_FILENAME, "r");
 
   if (!configFile) {
-    SPIFFS.end();
+    LittleFS.end();
     return false;
   }
 
@@ -113,8 +113,8 @@ bool ESPWiFiManager::try_connect() {
 }
 
 bool ESPWiFiManager::saveConfig(String SSID, String Password, bool FirstTry) {
-  SPIFFS.begin();
-  File configFile = SPIFFS.open(CONFIG_FILENAME, "w");
+  LittleFS.begin();
+  File configFile = LittleFS.open(CONFIG_FILENAME, "w");
   if(!configFile) {
     return false;
   }
@@ -132,8 +132,8 @@ bool ESPWiFiManager::saveConfig(String SSID, String Password, bool FirstTry) {
 }
 
 bool ESPWiFiManager::removeConfig() {
-  SPIFFS.begin();
-  return SPIFFS.remove(CONFIG_FILENAME);
+  LittleFS.begin();
+  return LittleFS.remove(CONFIG_FILENAME);
 }
 
 void ESPWiFiManager::loop() {
