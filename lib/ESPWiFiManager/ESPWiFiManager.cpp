@@ -14,11 +14,15 @@
 #define AP_SSID "P1 ESP"
 #define AP_PASSWORD "P1WiFi"
 
+IPAddress local_IP(192,168,4,22);
+IPAddress gateway(192,168,4,9);
+IPAddress subnet(255,255,255,0);
+
 void ESPWiFiManager::begin(String hostName) {
   this->hostName = hostName;
 
   if(!loadConfig()) {
-    beginAPMode();
+    beginAPMode();   
   } else {
     beginConnectedMode();
   }
@@ -64,7 +68,7 @@ void ESPWiFiManager::beginAPMode() {
   WiFi.disconnect();
   WiFi.mode(WIFI_AP);
   WiFi.hostname(hostName);
-  WiFi.softAPConfig(ip, ip, netmask);
+  WiFi.softAPConfig(local_IP, gateway, subnet);
   bool result = WiFi.softAP(AP_SSID, AP_PASSWORD);
 
   if(result) {
