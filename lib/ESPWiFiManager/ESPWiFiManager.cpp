@@ -42,7 +42,7 @@ bool ESPWiFiManager::loadConfig() {
 
   configFile.readBytes(buf.get(), size);
 
-  StaticJsonDocument<200> jsonDocument;
+  JsonDocument jsonDocument;
   DeserializationError error = deserializeJson(jsonDocument, buf.get());
 
   if (error) {
@@ -119,8 +119,7 @@ bool ESPWiFiManager::saveConfig(String SSID, String Password, bool FirstTry) {
     return false;
   }
 
-  const size_t bufferSize = JSON_OBJECT_SIZE(3);
-  DynamicJsonDocument jsonDocument(bufferSize);
+  JsonDocument jsonDocument;
 
   jsonDocument[CONFIG_SSID] = SSID;
   jsonDocument[CONFIG_PASSWORD] = Password;

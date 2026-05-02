@@ -1,7 +1,7 @@
 #include "ESPP1Serial.h"
 
 #define P1_SERIAL_ENABLE 12
-#define P1_IDLE_TIME_MILLIS 29000
+#define P1_IDLE_TIME_MILLIS 19000
 #define P1_ACTIVE_TIME_MILLIS 1000
 
 void ESPP1Serial::begin() {

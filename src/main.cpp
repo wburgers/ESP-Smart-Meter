@@ -28,6 +28,7 @@ void setup() {
   espP1Serial.begin();
   espOta.begin(hostName);
   server.begin();
+  ESP.wdtEnable(WDTO_8S);
 }
 
 int number_connected = 0;
@@ -36,8 +37,9 @@ void loop() {
   wifiManager.loop();
   espOta.loop();
   espP1Serial.loop(enabled);
+  ESP.wdtFeed();
 
-  WiFiClient client = server.available();
+  WiFiClient client = server.accept();
   if(client) {
     enabled = HIGH;
     for(i=0; i<MAX_CLIENTS; ++i) {
